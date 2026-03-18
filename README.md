@@ -4,45 +4,46 @@ Automatización de pruebas Front-End para **CyberGuard System** utilizando el pa
 
 ---
 
-##  Descripción
+## Descripción
 
 Este proyecto valida el flujo de autenticación de la plataforma CyberGuard System mediante dos escenarios independientes:
 
 | # | Escenario | Tipo |
 |---|-----------|------|
 | 1 | Acceso exitoso al sistema con credenciales válidas | Positivo |
-| 2 | Rechazo de acceso con credenciales incorrectas |  Negativo |
+| 2 | Rechazo de acceso con credenciales incorrectas | Negativo |
 
 ---
 
-##  Arquitectura
+## Arquitectura
 
 ```
 AUTO_FRONT_POM_FACTORY/
 ├── build.gradle
-├── gradle/
-│   └── wrapper/
-├── serenity.conf
-├── README.md
+├── settings.gradle
+├── gradlew
+├── gradle/wrapper/
 ├── src/
 │   ├── main/java/com/cyberguard/automation/
 │   │   └── pages/
-│   │       ├── LoginPage.java
-│   │       └── DashboardPage.java
+│   │       ├── LoginPage.java          <- @FindBy + PageObject
+│   │       └── DashboardPage.java      <- PageObject
 │   └── test/
 │       ├── java/com/cyberguard/automation/
 │       │   ├── runners/
-│       │   │   └── LoginRunner.java
+│       │   │   └── LoginRunner.java    <- @Suite JUnit Platform
 │       │   └── steps/
 │       │       └── LoginStepDefinitions.java
 │       └── resources/
-│           └── features/
-│               └── login.feature
+│           ├── features/
+│           │   └── login.feature
+│           ├── serenity.conf           <- configuración del driver
+│           └── cucumber.properties     <- glue + plugin Serenity
 ```
 
 ### Patrón utilizado
 
-- **POM + Page Factory:** Cada página de la aplicación se representa como una clase Java con elementos localizados mediante la anotación `@FindBy`, separando la lógica de interacción de la lógica de prueba.
+- **POM + Page Factory:** Cada página de la aplicación se modela como una clase Java que extiende `PageObject`. Los elementos se declaran con la anotación `@FindBy` de Serenity separando la lógica de localización de la lógica de interacción y de prueba.
 
 ---
 
@@ -50,10 +51,11 @@ AUTO_FRONT_POM_FACTORY/
 
 | Herramienta | Versión |
 |-------------|---------|
-| Java | 17+ |
-| Gradle | 8.x |
-| Serenity BDD | 4.0.30+ |
-| Cucumber | 7.15+ |
+| Java | 21 (OpenJDK) |
+| Gradle | 8.12 |
+| Serenity BDD | 4.2.12 |
+| Serenity Gradle Plugin | 5.3.7 |
+| Cucumber | 7.20.1 |
 | WebDriver | Chrome (autodownload) |
 | IDE | VS Code / IntelliJ IDEA |
 | AI Assistant | GitHub Copilot |
@@ -67,7 +69,7 @@ AUTO_FRONT_POM_FACTORY/
 - **CyberGuard System** corriendo localmente:
   ```bash
   cd cyberguard-system
-  docker compose up --build "o con" sudo docker compose up --build
+  sudo docker compose up --build
   ```
   Verificar que el frontend esté disponible en `http://localhost:4200`
 
@@ -90,17 +92,15 @@ AUTO_FRONT_POM_FACTORY/
 
 ## Ejecución de Tests
 
-### Ejecutar todos los tests
+### Ejecutar todos los tests y generar reporte
 ```bash
 ./gradlew clean test aggregate
 ```
 
-### Ver reporte Serenity
+### Abrir el reporte Serenity (Linux)
 ```bash
 xdg-open target/site/serenity/index.html
 ```
-
-> En macOS usar `open` en lugar de `xdg-open`.
 
 ---
 
@@ -113,10 +113,10 @@ target/site/serenity/index.html
 ```
 
 El reporte incluye:
-- Resultado de cada escenario (passed / failed)
+- Resultado de cada escenario (passed / failed / error)
 - Capturas de pantalla por paso
-- Tiempo de ejecución
-- Detalle de interacciones con la UI
+- Tiempo de ejecución por escenario y paso
+- Detalle completo de interacciones con la UI
 
 ---
 
@@ -128,7 +128,7 @@ El reporte incluye:
 > El usuario accede exitosamente al sistema con credenciales válidas y es redirigido al panel de administración.
 
 **Escenario 2 — Flujo negativo:**
-> El usuario ingresa credenciales incorrectas y el sistema muestra un mensaje indicando que las credenciales son inválidas.
+> El usuario ingresa una contraseña incorrecta y el sistema muestra un mensaje indicando que las credenciales son inválidas.
 
 ---
 
@@ -147,10 +147,10 @@ El reporte incluye:
 
 ---
 
-## 👤 Autor
+## Autor
 
 **Andrés Otalvaro**
 
 ---
 
-**Última actualización:** 16 de marzo de 2026
+**Última actualización:** 17 de marzo de 2026
