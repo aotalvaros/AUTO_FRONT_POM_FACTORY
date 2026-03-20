@@ -23,22 +23,22 @@ AUTO_FRONT_POM_FACTORY/
 ├── settings.gradle
 ├── gradlew
 ├── gradle/wrapper/
-├── src/
-│   ├── main/java/com/cyberguard/automation/
-│   │   └── pages/
-│   │       ├── LoginPage.java          <- @FindBy + PageObject
-│   │       └── DashboardPage.java      <- PageObject
-│   └── test/
-│       ├── java/com/cyberguard/automation/
-│       │   ├── runners/
-│       │   │   └── LoginRunner.java    <- @Suite JUnit Platform
-│       │   └── steps/
-│       │       └── LoginStepDefinitions.java
-│       └── resources/
-│           ├── features/
-│           │   └── login.feature
-│           ├── serenity.conf           <- configuración del driver
-│           └── cucumber.properties     <- glue + plugin Serenity
+└── src/
+    ├── main/java/com/cyberguard/automation/
+    │   └── pages/
+    │       ├── LoginPage.java       ← @DefaultUrl(/autenticacion) + @FindBy
+    │       └── DashboardPage.java   ← @DefaultUrl(/dashboard) + @FindBy
+    └── test/
+        ├── java/com/cyberguard/automation/
+        │   ├── runners/
+        │   │   └── LoginRunner.java              ← @Suite JUnit Platform
+        │   └── steps/
+        │       └── LoginStepDefinitions.java
+        └── resources/
+            ├── features/
+            │   └── login.feature
+            ├── serenity.conf        ← configuración del driver y URL base
+            └── cucumber.properties  ← glue + plugin Serenity
 ```
 
 ### Patrón utilizado
@@ -51,7 +51,7 @@ AUTO_FRONT_POM_FACTORY/
 
 | Herramienta | Versión |
 |-------------|---------|
-| Java | 21 (OpenJDK) |
+| Java | 17 (OpenJDK) |
 | Gradle | 8.12 |
 | Serenity BDD | 4.2.12 |
 | Serenity Gradle Plugin | 5.3.7 |
@@ -62,16 +62,27 @@ AUTO_FRONT_POM_FACTORY/
 
 ---
 
+## Repositorio bajo prueba
+
+Este proyecto automatiza pruebas sobre **CyberGuard System**:
+> [https://github.com/aotalvaros/cyberguard-system](https://github.com/aotalvaros/cyberguard-system)
+
+---
+
 ## Prerequisitos
 
 - **Java JDK 17+** instalado y configurado en `JAVA_HOME`
 - **Google Chrome** instalado (el driver se descarga automáticamente)
-- **CyberGuard System** corriendo localmente:
+- **CyberGuard System** clonado y corriendo localmente:
   ```bash
+  git clone https://github.com/aotalvaros/cyberguard-system.git
   cd cyberguard-system
   sudo docker compose up --build
   ```
   Verificar que el frontend esté disponible en `http://localhost:4200`
+
+> **Nota:** Si Chrome no resuelve `localhost` correctamente, actualiza `webdriver.base.url`
+> en `src/test/resources/serenity.conf` a `http://127.0.0.1:4200`.
 
 ---
 
@@ -79,7 +90,7 @@ AUTO_FRONT_POM_FACTORY/
 
 1. Clonar el repositorio:
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/aotalvaros/AUTO_FRONT_POM_FACTORY.git
    cd AUTO_FRONT_POM_FACTORY
    ```
 

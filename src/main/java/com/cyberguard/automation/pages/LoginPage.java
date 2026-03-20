@@ -5,8 +5,9 @@ import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
-@DefaultUrl("/login")
+@DefaultUrl("/autenticacion")
 public class LoginPage extends PageObject {
 
     @FindBy(id = "username")
@@ -22,11 +23,15 @@ public class LoginPage extends PageObject {
     private WebElementFacade errorMessage;
 
     public void enterUsername(String username) {
-        $(By.id("username")).waitUntilVisible().type(username);
+        WebElementFacade field = $(By.id("username")).waitUntilVisible();
+        field.clear();
+        field.sendKeys(username);
     }
 
     public void enterPassword(String password) {
-        $(By.id("password")).waitUntilVisible().type(password);
+        WebElementFacade field = $(By.id("password")).waitUntilVisible();
+        field.clear();
+        field.sendKeys(password);
     }
 
     public void clickLogin() {
