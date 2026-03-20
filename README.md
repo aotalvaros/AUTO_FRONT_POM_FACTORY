@@ -43,7 +43,7 @@ AUTO_FRONT_POM_FACTORY/
 
 ### Patrón utilizado
 
-- **POM + Page Factory:** Cada página de la aplicación se modela como una clase Java que extiende `PageObject`. Los elementos se declaran con la anotación `@FindBy` de Serenity separando la lógica de localización de la lógica de interacción y de prueba.
+- **POM + Page Factory:** Cada página de la aplicación se modela como una clase Java que extiende `PageObject`. Los elementos se declaran con la anotación `@FindBy` de Serenity BDD, que mapea automáticamente los selectores CSS/XPath a variables inyectadas. Los métodos usan directamente estos campos inyectados, separando claramente la lógica de localización (en `@FindBy`) de la lógica de interacción (en los métodos).
 
 ---
 

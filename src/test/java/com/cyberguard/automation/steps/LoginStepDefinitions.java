@@ -6,18 +6,25 @@ import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
+import net.serenitybdd.annotations.Managed;
+import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LoginStepDefinitions {
 
-    private LoginPage loginPage;
-    private DashboardPage dashboardPage;
+    @Managed
+    WebDriver driver;
+
+    LoginPage loginPage;
+    DashboardPage dashboardPage;
 
     @Dado("que el usuario se encuentra en la página de inicio de sesión")
     public void userNavigatesToLoginPage() {
         loginPage = new LoginPage();
+        loginPage.setDriver(driver);
         dashboardPage = new DashboardPage();
+        dashboardPage.setDriver(driver);
         loginPage.open();
     }
 
