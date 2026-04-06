@@ -10,8 +10,14 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("features")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "io.cucumber.core.plugin.SerenityReporterParallel,pretty")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.cyberguard.automation.steps")
-public class LoginRunner {
+@SelectClasspathResource("features/user_management.feature")
+@ConfigurationParameter(
+        key = PLUGIN_PROPERTY_NAME,
+        value = "io.cucumber.core.plugin.SerenityReporterParallel,pretty"
+)
+@ConfigurationParameter(
+        key = GLUE_PROPERTY_NAME,
+        value = "com.cyberguard.automation.steps"
+)
+public class UserManagementRunner {
 }
